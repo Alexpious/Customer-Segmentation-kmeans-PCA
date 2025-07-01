@@ -1,75 +1,64 @@
-# 🧠 Customer Segmentation Using K-Means & PCA
 
-This project aims to group customers into meaningful segments based on their age, gender, location, and purchasing behavior using machine learning techniques. Customer segmentation helps businesses personalize marketing strategies, increase sales, and improve customer experience.
 
----
+# Customer Segmentation Using K-Means Clustering & PCA
 
-## 📁 Dataset Overview
+## Project Overview
 
-The dataset contains transactional and demographic information of customers, including:
+This project performs customer segmentation on transactional and demographic data using unsupervised machine learning techniques. The goal is to group customers into meaningful clusters based on their purchasing behavior and other features, enabling targeted marketing and improved business strategies.
 
-- **Customer Age**, **Age Group**
-- **Gender**
-- **Country**
-- **Order Quantity**
-- **Unit Price**, **Revenue**, **Cost**, **Profit**
-- **Product Category and Sub-category**
+The main steps in this project include:
 
-The data was loaded from a local CSV file:  
-`Customer_Segmentation_py.csv`
+* Exploratory Data Analysis (EDA) to understand the dataset's characteristics
+* Data preprocessing and encoding of categorical variables
+* Feature selection based on variance
+* Using K-Means clustering to identify customer segments
+* Evaluating clustering performance using inertia and silhouette scores
+* Visualizing cluster centers and customer segments using PCA
 
 ---
 
-## 🔁 Workflow Summary
+## Dataset
 
-### 1. 🔍 Exploratory Data Analysis (EDA)
-- **Age Distribution**: Most customers are young adults.
-- **Gender Distribution**: Slightly higher number of female customers.
-- **Country Analysis**: Certain countries like the United States and France generate more orders.
-- **Revenue Insights**: Revenue patterns vary by gender and country.
+The dataset contains customer transactional and demographic data, including features such as:
 
-### 2. 🧹 Data Preprocessing
-- **Label Encoding** of categorical variables like Gender, Age Group, and Country.
-- **Feature Scaling** using StandardScaler.
-- **Dimensionality Reduction** using PCA to project the data into 2D for easier clustering and visualization.
+* Customer Age Group
+* Customer Gender
+* Country
+* Order Quantity
+* Revenue, Profit, Unit Price, Cost, Unit Cost
+* Date of transaction
 
-### 3. 📊 Clustering Using KMeans
-- Applied KMeans clustering with different `k` values.
-- **Silhouette Score** was used to choose the optimal number of clusters.
-- Cluster visualization was done after applying PCA.
-
-### 4. 📌 Final Model
-- Final model segmented the customer base into meaningful groups.
-- Used visualizations (scatter plots, bar charts) to interpret each customer cluster.
+*Note: Sensitive columns such as product details and location states were dropped for clustering.*
 
 ---
+## 🔁 Workflow Summary  
+1. Exploratory Data Analysis (EDA): We explored age group distribution (most customers were adults), gender distribution (slightly more males), order behavior (Canada and USA had highest average quantity ), and revenue trend by year (steady growth observed).  
+2. Data Preprocessing: We converted date to datetime and extracted the year, dropped irrelevant fields (State, Product, Day, Month, etc.), label encoded gender (M=1, F=0), age group (Adults=0, Young Adults=1, Seniors=2, Youth=3), and country. Then we selected top 5 high-variance features for clustering: Revenue, Unit Price, Cost, Unit Cost, and Profit.  
+3. Clustering Using KMeans: We applied KMeans clustering with different values of k from 2 to 12, and used inertia and silhouette score to evaluate them. The optimal number of clusters was found to be 3. We built the final model
+4. PCA & Visualization: We applied PCA to reduce the 5 features to 2 principal components and visualized the clusters using a 2D scatter plot with Plotly, which confirmed clear separation among the segments.
+
+   ## 💡 Business Value
+
+This analysis enables businesses to:
+
+* Tailor marketing campaigns to different customer types
+* Predict customer behavior and preferences
+* Identify underserved and high-potential segments
+* Improve retention and reduce churn with targeted offers
+* Optimize marketing spend and product development
 
 ## 🎯 Key Insights
 
-- **Segment 1**: Young adults who order frequently but purchase low-cost items. Ideal for upselling and product bundle offers.
-- **Segment 2**: Older customers with high average revenue per order. They respond well to loyalty programs.
-- **Segment 3**: Customers from specific countries (e.g., US, UK) tend to have higher purchasing power. Consider localized promotions.
-- **Segment 4**: Some clusters showed lower engagement — these users may need reactivation strategies like discounts or email campaigns.
-- **Gender-based Patterns**: Revenue and product interests vary by gender, enabling more personalized product recommendations.
+Segment 0: Budget-conscious customers with low profit, cost, and revenue. Likely first-time or low-engagement buyers.  
+Segment 1: Average spenders with balanced unit price, profit, and cost. Mid-tier customers who are responsive to standard marketing.  
+Segment 2: High-value customers with very high profit, unit cost, and revenue. Ideal for loyalty programs and premium offers.
+
+### 🔍 Cluster Interpretation and Recommendations
+
+- **Cluster 0**: Shows minimal activity across all variables (Profit, Unit_Cost, Cost, Unit_Price, Revenue). This suggests a low-engagement or inactive customer segment, with values close to zero.  
+- **Cluster 1**: Displays moderate activity. Profit and Unit_Price are around 1000–1500, Unit_Cost and Cost are slightly lower, and Revenue is around 2000. This cluster indicates balanced but moderate customer behavior with reasonable revenue generation.  
+- **Cluster 2**: Exhibits the highest activity. Revenue peaks at approximately 6000, with Cost around 4000, Profit and Unit_Price around 2000, and Unit_Cost lower. This cluster represents the most profitable and active customer segment, driven by high revenue and manageable costs.
+
+**✅ Recommendation:** Focus marketing and retention efforts on **Cluster 2** to maximize profitability, while exploring strategies to **activate or re-engage Cluster 0** customers. **Cluster 1** could benefit from targeted **upselling** to boost revenue further.
 
 ---
-
-## 📌 Technologies Used
-
-- **Python** (Jupyter Notebook)
-- `pandas`, `numpy` – Data wrangling
-- `matplotlib`, `seaborn`, `plotly` – Visualizations
-- `scikit-learn` – Label encoding, scaling, PCA, KMeans, evaluation
-
----
-
-## 💡 Business Value
-
-This analysis enables businesses to:
-- Tailor marketing campaigns to specific customer types
-- Predict customer behavior more accurately
-- Identify underserved segments
-- Increase ROI through customer-targeted strategies
-
----
-
